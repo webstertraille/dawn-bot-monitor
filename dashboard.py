@@ -80,10 +80,23 @@ BOT_COLORS = {
     "XGB4":           "#dc2626",
 }
 
-@st.cache_data(ttl=30)
+# ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+# FIX — May 23 2026
+# WHAT: Dashboard showed zeros after deploy.
+# WHY:  cache_data cannot serialize gspread client objects.
+#       Previous attempt to use cache_data for get_sheet_client
+#       broke auth entirely. cache_resource is correct for the
+#       client (long-lived connection). The data fetch uses
+#       get_all_values() which returns plain lists — fully
+#       serializable — so cache_data(ttl=30) works correctly.
+# ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+@st.cache_resource
 def get_sheet_client():
     creds_dict = json.loads(st.secrets["GOOGLE_CREDENTIALS"])
-    creds = Credentials.from_service_account_info(creds_dict, scopes=["https://www.googleapis.com/auth/spreadsheets.readonly"])
+    creds = Credentials.from_service_account_info(
+        creds_dict,
+        scopes=["https://www.googleapis.com/auth/spreadsheets.readonly"]
+    )
     return gspread.authorize(creds)
 
 @st.cache_data(ttl=30)
@@ -92,16 +105,19 @@ def load_bot_data(tab_name):
         gc = get_sheet_client()
         sheet = gc.open_by_key(SHEET_ID)
         ws = sheet.worksheet(tab_name)
-        data = ws.get_all_records()
-        if not data:
+        all_values = ws.get_all_values()  # plain list of lists — serializable
+        if len(all_values) < 2:
             return pd.DataFrame()
+        headers = all_values[0]
+        data = [dict(zip(headers, row)) for row in all_values[1:]]
         df = pd.DataFrame(data)
-        df = df[df['outcome'].isin(['WIN','LOSS'])]
-        df['timestamp'] = pd.to_datetime(df['timestamp'])
+        df = df[df['outcome'].isin(['WIN', 'LOSS'])]
+        df['timestamp'] = pd.to_datetime(df['timestamp'], errors='coerce')
         df['pnl'] = pd.to_numeric(df['pnl'], errors='coerce').fillna(0)
         df['ml_prob'] = pd.to_numeric(df['ml_prob'], errors='coerce').fillna(0)
         return df.sort_values('timestamp', ascending=False)
-    except:
+    except Exception as e:
+        st.write(f"[DEBUG] {tab_name}: {e}")  # remove after confirming fix
         return pd.DataFrame()
 
 def calc_stats(df):
