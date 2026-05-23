@@ -80,7 +80,7 @@ BOT_COLORS = {
     "XGB4":           "#dc2626",
 }
 
-@st.cache_resource(ttl=30)
+@st.cache_data(ttl=30)
 def get_sheet_client():
     creds_dict = json.loads(st.secrets["GOOGLE_CREDENTIALS"])
     creds = Credentials.from_service_account_info(creds_dict, scopes=["https://www.googleapis.com/auth/spreadsheets.readonly"])
