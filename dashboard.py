@@ -23,37 +23,37 @@ st.set_page_config(
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap');
-* { font-family: 'Inter', sans-serif; }
+* { font-family: 'Inter', sans-serif; font-weight: 500; }
 .stApp { background: #fafafa; color: #111827; }
 [data-testid="stAppViewContainer"] { background: #fafafa; }
 [data-testid="stHeader"] { background: #fafafa; }
 .dawn-header { display:flex; align-items:center; gap:12px; padding:8px 0 4px 0; border-bottom:3px solid #f59e0b; margin-bottom:24px; }
-.dawn-title { font-size:26px; font-weight:700; color:#92400e; letter-spacing:2px; }
-.dawn-subtitle { font-size:13px; color:#6b7280; margin-top:2px; }
+.dawn-title { font-size:28px; font-weight:800; color:#78350f; letter-spacing:2px; }
+.dawn-subtitle { font-size:13px; color:#374151; font-weight:500; margin-top:2px; }
 .dawn-time { margin-left:auto; font-family:'JetBrains Mono',monospace; font-size:11px; color:#9ca3af; }
 .metric-card { background:#ffffff; border:0.5px solid #e5e7eb; border-radius:12px; padding:18px 16px; text-align:center; box-shadow:0 1px 4px rgba(0,0,0,0.06); margin:2px; }
-.metric-bot-name { font-size:10px; font-weight:600; color:#6b7280; text-transform:uppercase; letter-spacing:2px; margin-bottom:2px; }
-.metric-stake { font-size:10px; font-weight:500; margin-bottom:10px; }
+.metric-bot-name { font-size:10px; font-weight:700; color:#374151; text-transform:uppercase; letter-spacing:2px; margin-bottom:2px; }
+.metric-stake { font-size:11px; font-weight:700; margin-bottom:10px; }
 .metric-wr { font-family:'JetBrains Mono',monospace; font-size:30px; font-weight:700; margin-bottom:2px; }
-.metric-wr-label { font-size:10px; color:#9ca3af; margin-bottom:8px; }
+.metric-wr-label { font-size:11px; color:#6b7280; font-weight:600; margin-bottom:8px; }
 .metric-pnl { font-family:'JetBrains Mono',monospace; font-size:18px; font-weight:600; margin-bottom:2px; }
-.metric-pnl-label { font-size:10px; color:#9ca3af; margin-bottom:8px; }
-.metric-trades { font-size:12px; color:#374151; margin-bottom:4px; }
-.metric-streak { font-size:12px; color:#9ca3af; }
+.metric-pnl-label { font-size:11px; color:#6b7280; font-weight:600; margin-bottom:8px; }
+.metric-trades { font-size:12px; color:#111827; font-weight:600; margin-bottom:4px; }
+.metric-streak { font-size:12px; color:#374151; font-weight:600; }
 .green { color:#059669; } .red { color:#dc2626; } .amber { color:#d97706; } .gray { color:#6b7280; }
-.section-title { font-size:10px; font-weight:600; color:#9ca3af; text-transform:uppercase; letter-spacing:3px; margin:28px 0 12px 0; padding-bottom:6px; border-bottom:1px solid #f3f4f6; }
+.section-title { font-size:11px; font-weight:800; color:#374151; text-transform:uppercase; letter-spacing:3px; margin:28px 0 12px 0; padding-bottom:6px; border-bottom:2px solid #f59e0b; }
 .trade-feed { background:#ffffff; border:0.5px solid #e5e7eb; border-radius:10px; overflow:hidden; box-shadow:0 1px 4px rgba(0,0,0,0.04); }
 .trade-row { display:flex; align-items:center; gap:12px; padding:9px 14px; border-bottom:0.5px solid #f3f4f6; font-size:12px; }
 .trade-row:last-child { border-bottom:none; }
 .trade-win { border-left:3px solid #059669; }
 .trade-loss { border-left:3px solid #dc2626; }
-.trade-sym { font-weight:600; color:#111827; min-width:70px; }
-.trade-dir { color:#6b7280; min-width:40px; }
-.trade-bot { color:#9ca3af; font-size:11px; flex:1; }
-.trade-prob { font-family:'JetBrains Mono',monospace; color:#6b7280; font-size:11px; min-width:48px; }
+.trade-sym { font-weight:700; color:#111827; min-width:70px; font-size:13px; }
+.trade-dir { color:#374151; font-weight:600; min-width:40px; }
+.trade-bot { color:#374151; font-size:11px; font-weight:600; flex:1; }
+.trade-prob { font-family:'JetBrains Mono',monospace; color:#374151; font-weight:600; font-size:11px; min-width:48px; }
 .trade-pnl { font-family:'JetBrains Mono',monospace; font-weight:600; min-width:58px; text-align:right; }
-.trade-time { color:#d1d5db; font-size:11px; min-width:44px; text-align:right; }
-.breakeven-bar { background:#f3f4f6; border-radius:6px; padding:10px 16px; display:flex; align-items:center; gap:12px; margin:8px 0; font-size:12px; color:#6b7280; flex-wrap:wrap; }
+.trade-time { color:#6b7280; font-size:11px; font-weight:600; min-width:44px; text-align:right; }
+.breakeven-bar { background:#fffbeb; border:1px solid #fcd34d; border-radius:6px; padding:10px 16px; display:flex; align-items:center; gap:12px; margin:8px 0; font-size:12px; font-weight:600; color:#374151; flex-wrap:wrap; }
 </style>
 """, unsafe_allow_html=True)
 
